@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex items-center p-2.5 border-b mb-2 bg-popover gap-2">
-            <span className="font-bold text-2xl mr-auto">Skill Swap</span>
+            <Link className="font-bold text-2xl mr-auto" href="/">
+              Skill Swap
+            </Link>
             <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
