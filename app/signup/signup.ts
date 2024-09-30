@@ -14,7 +14,6 @@ export const formSchema = z.object({
 
 export async function signup(values: z.infer<typeof formSchema>) {
   const { username, password } = values;
-  console.log(username, password);
 
   const passwordHash = await hash(password, {
     memoryCost: 19456,
