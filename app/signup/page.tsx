@@ -12,13 +12,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signup } from "./signup";
-import { useState } from "react";
-
-export const formSchema = z.object({
-  username: z.string().min(3).max(31),
-  password: z.string().min(6).max(255),
-});
+import { formSchema, signup } from "./signup";
 
 export default function Page() {
   const form = useForm<z.infer<typeof formSchema>>({
