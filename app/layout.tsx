@@ -1,6 +1,8 @@
+import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,14 +20,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={inter.className}>
+      <body className={cn(inter.className, "flex flex-col h-screen w-screen")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex items-center justify-between p-2 border-b mb-2">
+            <span className="font-bold text-2xl">Skill Swap</span>
+            <ModeToggle />
+          </div>
+          <main className="p-1 w-full flex flex-col grow items-center justify-center">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>
