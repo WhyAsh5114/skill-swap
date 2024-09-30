@@ -6,11 +6,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { lucia } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { z } from "zod";
-
-export const formSchema = z.object({
-  username: z.string().min(3).max(31),
-  password: z.string().min(6).max(255),
-});
+import { formSchema } from "./schema";
 
 export async function signup(values: z.infer<typeof formSchema>) {
   const { username, password } = values;

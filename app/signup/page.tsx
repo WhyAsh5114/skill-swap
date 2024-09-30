@@ -12,7 +12,8 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { formSchema, signup } from "./signup";
+import { signup } from "./signup";
+import { formSchema } from "./schema";
 
 export default function Page() {
   const form = useForm<z.infer<typeof formSchema>>({
