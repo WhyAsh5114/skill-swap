@@ -27,7 +27,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex items-center justify-between p-2 border-b mb-2">
+          <div className="flex items-center justify-between p-2.5 border-b mb-2 bg-popover">
             <span className="font-bold text-2xl">Skill Swap</span>
             <ModeToggle />
           </div>
