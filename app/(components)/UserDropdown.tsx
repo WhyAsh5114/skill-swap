@@ -4,10 +4,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { validateRequest } from "@/lib/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-
-import { LoggedInDropdown } from "./LoggedInDropdown";
+import { User } from "lucide-react";
 import Link from "next/link";
+import { LoggedInDropdown } from "./LoggedInDropdown";
 
 export default async function UserDropdown() {
   const { user } = await validateRequest();
@@ -21,13 +20,9 @@ export default async function UserDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="h-8 w-8">
-          <AvatarImage
-            src="https://github.com/shadcn.png"
-            alt="profile picture"
-          />
-          <AvatarFallback>P</AvatarFallback>
-        </Avatar>
+        <Button variant="outline" size="icon">
+          <User />
+        </Button>
       </DropdownMenuTrigger>
       <LoggedInDropdown />
     </DropdownMenu>

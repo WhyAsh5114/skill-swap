@@ -36,7 +36,7 @@ export default function RootLayout({
             <ModeToggle />
             <UserDropdown />
           </div>
-          <main className="p-1 w-full flex flex-col grow items-center justify-center">
+          <main className="p-2 w-full flex flex-col grow items-center justify-center">
             {children}
           </main>
         </ThemeProvider>

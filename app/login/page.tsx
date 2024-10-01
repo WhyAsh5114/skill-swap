@@ -41,7 +41,7 @@ export default function Page() {
         <TabsTrigger value="register">Register</TabsTrigger>
       </TabsList>
       <TabsContent value="login">
-        <Card>
+        <Card className="rounded-lg">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>Login to an existing account</CardDescription>
@@ -108,7 +108,7 @@ export default function Page() {
         </Card>
       </TabsContent>
       <TabsContent value="register">
-        <Card>
+        <Card className="rounded-lg">
           <CardHeader>
             <CardTitle>Register</CardTitle>
             <CardDescription>Create a new account</CardDescription>
