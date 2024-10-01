@@ -5,10 +5,15 @@ import { X, Plus } from "lucide-react";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import type { SkillOfUser } from "@prisma/client";
 
-export function SkillsComponent() {
+type PropsType = { skillsOfUser: SkillOfUser[] };
+
+export function SkillsComponent({ skillsOfUser }: PropsType) {
   const [skillToAdd, setSkillToAdd] = useState("");
-  const [skills, setSkills] = useState<string[]>(["React", "Python"]);
+  const [skills, setSkills] = useState<string[]>(
+    skillsOfUser.map(({ skillName }) => skillName)
+  );
 
   function addSkill() {
     const skill = skillToAdd;
@@ -26,7 +31,7 @@ export function SkillsComponent() {
   return (
     <>
       <div className="flex items-end gap-1">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="skill-name">Search skills</Label>
           <Input
             id="skill-name"

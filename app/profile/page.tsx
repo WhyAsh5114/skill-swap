@@ -1,7 +1,4 @@
-import { TypographyH2 } from "@/components/ui/typographyH2";
-import { UsernameComponent } from "./components/UsernameComponent";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,13 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { Button } from "@/components/ui/button";
-import { SkillsComponent } from "./components/SkillsComponent";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TypographyH2 } from "@/components/ui/typographyH2";
+import { Suspense } from "react";
+import { SkillsDataWrapper } from "./components/SkillsDataWrapper";
+import { UsernameComponent } from "./components/UsernameComponent";
 
 export default async function Page() {
   return (
-    <div className="h-px grow w-full">
+    <div className="h-px grow w-full max-w-xl">
       <TypographyH2>Profile</TypographyH2>
       <Suspense fallback={<Skeleton className="h-8 w-32" />}>
         <UsernameComponent />
@@ -27,7 +26,9 @@ export default async function Page() {
           <CardDescription>Manage your skills here</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <SkillsComponent />
+          <Suspense fallback={<Skeleton className="h-24 w-full" />}>
+            <SkillsDataWrapper />
+          </Suspense>
         </CardContent>
         <CardFooter>
           <Button className="ml-auto">Save changes</Button>
