@@ -1,15 +1,20 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X, Plus } from "lucide-react";
+import { X, Plus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import type { SkillOfUser } from "@prisma/client";
+import { saveChangesAction } from "./actions";
+import { useToast } from "@/hooks/use-toast";
 
 type PropsType = { skillsOfUser: SkillOfUser[] };
 
 export function SkillsComponent({ skillsOfUser }: PropsType) {
+  const { toast } = useToast();
+  const [saving, setSaving] = useState(false);
+
   const [skillToAdd, setSkillToAdd] = useState("");
   const [skills, setSkills] = useState<string[]>(
     skillsOfUser.map(({ skillName }) => skillName)
@@ -18,14 +23,19 @@ export function SkillsComponent({ skillsOfUser }: PropsType) {
   function addSkill() {
     const skill = skillToAdd;
     setSkillToAdd("");
-    if (skills.includes(skill)) {
-      return false;
-    }
+    if (skills.includes(skill)) return false;
     setSkills([...skills, skill]);
   }
 
   function removeSkill(skill: string) {
     setSkills(skills.filter((_skill) => _skill !== skill));
+  }
+
+  async function saveChanges() {
+    setSaving(true);
+    await saveChangesAction(skills);
+    setSaving(false);
+    toast({ description: "Changes saved successfully" });
   }
 
   return (
@@ -61,6 +71,9 @@ export function SkillsComponent({ skillsOfUser }: PropsType) {
           </Badge>
         ))}
       </div>
+      <Button className="ml-auto mt-6" onClick={saveChanges}>
+        {saving ? <LoaderCircle className="animate-spin" /> : "Save changes"}
+      </Button>
     </>
   );
 }
