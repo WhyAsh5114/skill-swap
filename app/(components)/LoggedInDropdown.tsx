@@ -9,7 +9,7 @@ import Link from "next/link";
 export function LoggedInDropdown() {
   return (
     <DropdownMenuContent align="end">
-      <DropdownMenuItem>
+      <DropdownMenuItem asChild>
         <Link href="/profile">Profile</Link>
       </DropdownMenuItem>
       <DropdownMenuItem className="text-red-500" onClick={() => logout()}>
