@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { validateRequest } from "@/lib/auth";
 import { User } from "lucide-react";
 import Link from "next/link";
-import { LoggedInDropdown } from "./LoggedInDropdown";
+import { LogoutButton } from "./LogoutButton";
 
 export default async function UserDropdown() {
   const { user } = await validateRequest();
@@ -17,7 +19,7 @@ export default async function UserDropdown() {
       </Button>
     );
   }
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,7 +27,12 @@ export default async function UserDropdown() {
           <User />
         </Button>
       </DropdownMenuTrigger>
-      <LoggedInDropdown />
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href="/profile">Profile</Link>
+        </DropdownMenuItem>
+        <LogoutButton />
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 }
