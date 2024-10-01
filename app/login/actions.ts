@@ -42,7 +42,7 @@ export async function login(values: z.infer<typeof formSchema>) {
 
   const existingUser = await prisma.user.findUnique({ where: { username } });
   if (!existingUser) {
-    return;
+    throw new Error("Incorrect username or password");
   }
 
   const validPassword = await verify(existingUser.password_hash, password, {
