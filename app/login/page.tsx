@@ -50,13 +50,11 @@ export default function Page() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(async (e) => {
-                  try {
-                    await login(e);
-                  } catch (error) {
-                    if (error instanceof Error)
-                      form.setError("password", {
-                        message: error.message,
-                      });
+                  const response = await login(e);
+                  if (response) {
+                    form.setError("password", {
+                      message: response,
+                    });
                   }
                 })}
                 className="flex flex-col gap-4"
@@ -117,13 +115,11 @@ export default function Page() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(async (e) => {
-                  try {
-                    await signup(e);
-                  } catch (error) {
-                    if (error instanceof Error)
-                      form.setError("username", {
-                        message: error.message,
-                      });
+                  const response = await signup(e);
+                  if (response) {
+                    form.setError("password", {
+                      message: response,
+                    });
                   }
                 })}
                 className="flex flex-col gap-4"

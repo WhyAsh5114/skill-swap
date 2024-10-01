@@ -24,7 +24,7 @@ export async function signup(values: z.infer<typeof formSchema>) {
       data: { id: userId, username: username, password_hash: passwordHash },
     });
   } catch (error) {
-    throw new Error("Username already exists");
+    return "Username already exists";
   }
 
   const session = await lucia.createSession(userId, {});
@@ -42,7 +42,7 @@ export async function login(values: z.infer<typeof formSchema>) {
 
   const existingUser = await prisma.user.findUnique({ where: { username } });
   if (!existingUser) {
-    throw new Error("Incorrect username or password");
+    return "Incorrect username or password";
   }
 
   const validPassword = await verify(existingUser.password_hash, password, {
@@ -52,7 +52,7 @@ export async function login(values: z.infer<typeof formSchema>) {
     parallelism: 1,
   });
   if (!validPassword) {
-    throw new Error("Incorrect username or password");
+    return "Incorrect username or password";
   }
 
   const session = await lucia.createSession(existingUser.id, {});
