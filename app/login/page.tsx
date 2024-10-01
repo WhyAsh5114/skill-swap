@@ -35,7 +35,7 @@ export default function Page() {
   });
 
   return (
-    <Tabs defaultValue="login" className="w-full">
+    <Tabs defaultValue="login" className="w-full max-w-xl">
       <TabsList className="w-full grid grid-cols-2">
         <TabsTrigger value="login">Login</TabsTrigger>
         <TabsTrigger value="register">Register</TabsTrigger>
