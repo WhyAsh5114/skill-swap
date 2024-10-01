@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  username      String    @unique
+  id            String        @id
+  username      String        @unique
   password_hash String
   sessions      Session[]
+  SkillOfUser   SkillOfUser[]
 }
 
 model Session {
@@ -19,4 +20,18 @@ model Session {
   userId    String
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Skill {
+  name        String        @id
+  SkillOfUser SkillOfUser[]
+}
+
+model SkillOfUser {
+  skill     Skill  @relation(fields: [skillName], references: [name])
+  skillName String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@id([skillName, userId])
 }
