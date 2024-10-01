@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import UserDropdown from "./(components)/UserDropdown";
+import UserDropdown from "./components/UserDropdown";
 import "./globals.css";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -1,5 +1,5 @@
 import { TypographyH2 } from "@/components/ui/typographyH2";
-import { UsernameComponent } from "./UsernameComponent";
+import { UsernameComponent } from "./components/UsernameComponent";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
