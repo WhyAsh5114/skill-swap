@@ -8,6 +8,7 @@ import UserDropdown from "./components/UserDropdown";
 import "./globals.css";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
           <main className="p-2 w-full flex flex-col grow items-center justify-center">
             {children}
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
