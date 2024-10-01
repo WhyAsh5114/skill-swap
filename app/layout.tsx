@@ -1,24 +1,18 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Link from "next/link";
+import UserDropdown from "./(components)/UserDropdown";
+import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
 
-export const metadata: Metadata = { title: "Skill swap" };
+export const metadata: Metadata = { title: "Skill Swap" };
 
 export default function RootLayout({
   children,
@@ -40,23 +34,7 @@ export default function RootLayout({
               Skill Swap
             </Link>
             <ModeToggle />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="profile picture"
-                  />
-                  <AvatarFallback>P</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500">
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <UserDropdown />
           </div>
           <main className="p-1 w-full flex flex-col grow items-center justify-center">
             {children}
