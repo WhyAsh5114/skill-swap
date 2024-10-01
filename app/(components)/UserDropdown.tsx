@@ -17,6 +17,7 @@ export default async function UserDropdown() {
       </Button>
     );
   }
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

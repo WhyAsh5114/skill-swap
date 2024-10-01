@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import UserDropdown from "./(components)/UserDropdown";
 import "./globals.css";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,7 +36,9 @@ export default function RootLayout({
               Skill Swap
             </Link>
             <ModeToggle />
-            <UserDropdown />
+            <Suspense fallback={<Skeleton className="w-9 h-9" />}>
+              <UserDropdown />
+            </Suspense>
           </div>
           <main className="p-2 w-full flex flex-col grow items-center justify-center">
             {children}
