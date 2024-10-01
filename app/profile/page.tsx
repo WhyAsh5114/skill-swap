@@ -13,6 +13,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SkillsComponent } from "./components/SkillsComponent";
+import { Plus } from "lucide-react";
 
 export default async function Page() {
   return (
@@ -26,12 +28,18 @@ export default async function Page() {
           <CardTitle>Skills</CardTitle>
           <CardDescription>Manage your skills here</CardDescription>
         </CardHeader>
-        <CardContent className="flex items-end gap-1.5">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="skill-name">Search skills</Label>
-            <Input id="skill-name" placeholder="Type here" />
+        <CardContent className="flex flex-col gap-2">
+          <div className="flex items-end gap-1">
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="skill-name">Search skills</Label>
+              <Input id="skill-name" placeholder="Type here" />
+            </div>
+            <Button variant="secondary" className="gap-2">
+              Add
+              <Plus className="w-4 h-4" />
+            </Button>
           </div>
-          <Button variant="secondary">Add</Button>
+          <SkillsComponent />
         </CardContent>
         <CardFooter>
           <Button className="ml-auto">Save changes</Button>
