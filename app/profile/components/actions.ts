@@ -4,7 +4,7 @@ import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
-export async function saveChangesAction(skillNames: string[]) {
+export async function saveSkillsChangesAction(skillNames: string[]) {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
 
@@ -26,4 +26,17 @@ export async function saveChangesAction(skillNames: string[]) {
     deleteOldSkillsOfUser,
     addSkillsToUser,
   ]);
+}
+
+export async function saveProfileChangesAction(
+  username: string,
+  profilePicture: string
+) {
+  const { user } = await validateRequest();
+  if (!user) return redirect("/login");
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { username, profilePicture },
+  });
 }
