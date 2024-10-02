@@ -11,6 +11,7 @@ import {
 import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { getInitials } from "@/lib/utils";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export async function UsersTable() {
@@ -34,12 +35,16 @@ export async function UsersTable() {
         {users.map((user) => (
           <TableRow key={user.username}>
             <TableCell>
-              <Avatar>
-                <AvatarImage src={user.profilePicture ?? ""} />
-                <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
-              </Avatar>
+              <Link href={`/view-profile/${user.id}`}>
+                <Avatar>
+                  <AvatarImage src={user.profilePicture ?? ""} />
+                  <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
+                </Avatar>
+              </Link>
             </TableCell>
-            <TableCell>{user.username}</TableCell>
+            <TableCell>
+              <Link href={`/view-profile/${user.id}`}>{user.username}</Link>
+            </TableCell>
             <TableCell>
               <div className="flex flex-wrap gap-1">
                 {user.knownSkills.map((skill) => (
