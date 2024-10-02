@@ -13,11 +13,11 @@ export async function saveSkillsChangesAction(skillNames: string[]) {
     skipDuplicates: true,
   });
 
-  const deleteOldSkillsOfUser = prisma.skillOfUser.deleteMany({
+  const deleteOldSkillsOfUser = prisma.knownSkillOfUser.deleteMany({
     where: { userId: user.id },
   });
 
-  const addSkillsToUser = prisma.skillOfUser.createMany({
+  const addSkillsToUser = prisma.knownSkillOfUser.createMany({
     data: skillNames.map((skillName) => ({ userId: user.id, skillName })),
   });
 

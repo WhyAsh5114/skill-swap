@@ -17,7 +17,7 @@ export async function UsersTable() {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
   const users = await prisma.user.findMany({
-    include: { skills: true },
+    include: { knownSkills: true },
     where: { id: { not: user.id } },
   });
 
@@ -25,9 +25,7 @@ export async function UsersTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead colSpan={2}>
-            User
-          </TableHead>
+          <TableHead colSpan={2}>User</TableHead>
           <TableHead className="w-40">Skills</TableHead>
         </TableRow>
       </TableHeader>
@@ -42,10 +40,10 @@ export async function UsersTable() {
             </TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell className="flex flex-wrap gap-1">
-              {user.skills.map((skill) => (
+              {user.knownSkills.map((skill) => (
                 <Badge key={skill.skillName}>{skill.skillName}</Badge>
               ))}
-              {user.skills.length === 0 ? (
+              {user.knownSkills.length === 0 ? (
                 <Badge variant="outline">None</Badge>
               ) : (
                 <></>

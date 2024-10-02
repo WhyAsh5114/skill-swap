@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id             String        @id
-  username       String        @unique
+  id             String              @id
+  username       String              @unique
   password_hash  String
   profilePicture String?
   sessions       Session[]
-  skills         SkillOfUser[]
+  knownSkills    KnownSkillOfUser[]
+  wantedSkills   WantedSkillOfUser[]
 }
 
 model Session {
@@ -24,11 +25,21 @@ model Session {
 }
 
 model Skill {
-  name  String        @id
-  users SkillOfUser[]
+  name     String              @id
+  knownBy  KnownSkillOfUser[]
+  wantedBy WantedSkillOfUser[]
 }
 
-model SkillOfUser {
+model KnownSkillOfUser {
+  skill     Skill  @relation(fields: [skillName], references: [name])
+  skillName String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@id([skillName, userId])
+}
+
+model WantedSkillOfUser {
   skill     Skill  @relation(fields: [skillName], references: [name])
   skillName String
   user      User   @relation(fields: [userId], references: [id])

@@ -5,18 +5,18 @@ import { X, Plus, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import type { SkillOfUser } from "@prisma/client";
+import type { KnownSkillOfUser } from "@prisma/client";
 import { saveSkillsChangesAction } from "./actions";
 import { toast } from "@/hooks/use-toast";
 
-type PropsType = { skillsOfUser: SkillOfUser[] };
+type PropsType = { knownSkillsOfUser: KnownSkillOfUser[] };
 
-export function SkillsComponent({ skillsOfUser }: PropsType) {
+export function SkillsComponent({ knownSkillsOfUser }: PropsType) {
   const [saving, setSaving] = useState(false);
 
   const [skillToAdd, setSkillToAdd] = useState("");
   const [skills, setSkills] = useState<string[]>(
-    skillsOfUser.map(({ skillName }) => skillName)
+    knownSkillsOfUser.map(({ skillName }) => skillName)
   );
 
   function addSkill() {

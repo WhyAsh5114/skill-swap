@@ -7,9 +7,9 @@ export async function SkillsDataWrapper() {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
 
-  const skillsOfUser = await prisma.skillOfUser.findMany({
+  const knownSkillsOfUser = await prisma.knownSkillOfUser.findMany({
     where: { userId: user.id },
   });
 
-  return <SkillsComponent skillsOfUser={skillsOfUser} />;
+  return <SkillsComponent knownSkillsOfUser={knownSkillsOfUser} />;
 }
