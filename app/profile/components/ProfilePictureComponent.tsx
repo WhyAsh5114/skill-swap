@@ -8,7 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 
-export default function ProfilePictureComponent() {
+type PropsType = {
+  username: string;
+  profilePicture: string;
+};
+
+export default function ProfilePictureComponent(data: PropsType) {
   const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
 

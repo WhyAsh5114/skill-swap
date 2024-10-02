@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import ProfilePictureComponent from "./components/ProfilePictureComponent";
 import { SkillsDataWrapper } from "./components/SkillsDataWrapper";
 import { UsernameComponent } from "./components/UsernameComponent";
+import { ProfilePictureDataWrapper } from "./components/ProfilePicureDataWrapper";
 
 export default async function Page() {
   return (
@@ -34,7 +35,9 @@ export default async function Page() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-              <ProfilePictureComponent />
+              <Suspense fallback={<Skeleton className="h-36 w-full" />}>
+                <ProfilePictureDataWrapper />
+              </Suspense>
             </CardContent>
           </Card>
         </TabsContent>
