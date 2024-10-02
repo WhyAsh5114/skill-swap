@@ -39,12 +39,12 @@ export default async function UserCard({ viewingUserId }: PropsType) {
 
   return (
     <Card className="mt-4 rounded-lg">
-      <CardHeader className="grid grid-cols-4">
+      <CardHeader className="flex flex-row items-center gap-4">
         <Avatar className="h-12 w-12">
           <AvatarImage src={viewingUser.profilePicture ?? ""} />
           <AvatarFallback>{getInitials(viewingUser.username)}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col col-span-3 justify-between">
+        <div className="flex flex-col gap-1">
           <CardTitle>{viewingUser.username}</CardTitle>
           <CardDescription className="text-sm">
             {viewingUser.id}

@@ -41,7 +41,7 @@ export default function RootLayout({
               <UserDropdown />
             </Suspense>
           </div>
-          <main className="p-2 w-full flex flex-col grow items-center justify-center">
+          <main className="p-2 w-full max-w-xl mx-auto flex flex-col grow items-center justify-center">
             {children}
           </main>
           <Toaster />
