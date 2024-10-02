@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { MessageCircle, UserRoundCheck } from "lucide-react";
+import { UserRoundCheck } from "lucide-react";
 import { useState } from "react";
 import { acceptConnectionAction } from "./actions";
 import ChatButton from "./ChatButton";

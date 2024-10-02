@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -10,9 +9,9 @@ import {
 } from "@/components/ui/table";
 import { getInitials } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
-import { UserRoundX } from "lucide-react";
 import Link from "next/link";
-import AcceptConnectionButton from "./AcceptConnectionButton";
+import AcceptConnectionRequestButton from "./AcceptConnectionRequestButton";
+import CancelConnectionRequestButton from "./CancelConnectionRequestButton";
 import ChatButton from "./ChatButton";
 
 type PropsType = {
@@ -70,10 +69,7 @@ export default function ConnectionsComponent({ userData }: PropsType) {
             </TableCell>
             <TableCell>{sentRequest.toUser.username}</TableCell>
             <TableCell className="text-right">
-              <Button className="gap-2 w-28" variant="outline">
-                <span className="grow text-center">Cancel</span>{" "}
-                <UserRoundX className="h-4 w-4" />
-              </Button>
+              <CancelConnectionRequestButton toUserId={sentRequest.toUserId} />
             </TableCell>
           </TableRow>
         ))}
@@ -93,7 +89,7 @@ export default function ConnectionsComponent({ userData }: PropsType) {
             </TableCell>
             <TableCell>{receivedRequests.fromUser.username}</TableCell>
             <TableCell className="text-right">
-              <AcceptConnectionButton
+              <AcceptConnectionRequestButton
                 fromUserId={receivedRequests.fromUserId}
               />
             </TableCell>
