@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -6,19 +8,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import prisma from "@/lib/db";
 import { getInitials } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { UserRoundPlus } from "lucide-react";
+import AddConnectionButton from "./AddConnectionButton";
+import { validateRequest } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default async function UserCard({ userId }: { userId: string }) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    include: { knownSkills: true, wantedSkills: true },
+type PropsType = { viewingUserId: string };
+
+export default async function UserCard({ viewingUserId }: PropsType) {
+  const { user } = await validateRequest();
+  if (!user) return redirect("/login");
+
+  const viewingUser = await prisma.user.findUnique({
+    where: { id: viewingUserId },
+    include: {
+      knownSkills: true,
+      wantedSkills: true,
+      connections: true,
+      receivedRequests: true,
+    },
   });
-  if (!user) {
+  if (!viewingUser) {
     return (
       <span className="mt-4 font-light">
         <span className="font-semibold">404</span> Profile not found
@@ -30,22 +41,24 @@ export default async function UserCard({ userId }: { userId: string }) {
     <Card className="mt-4 rounded-lg">
       <CardHeader className="grid grid-cols-4">
         <Avatar className="h-12 w-12">
-          <AvatarImage src={user.profilePicture ?? ""} />
-          <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
+          <AvatarImage src={viewingUser.profilePicture ?? ""} />
+          <AvatarFallback>{getInitials(viewingUser.username)}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col col-span-3 justify-between">
-          <CardTitle>{user.username}</CardTitle>
-          <CardDescription className="text-sm">{user.id}</CardDescription>
+          <CardTitle>{viewingUser.username}</CardTitle>
+          <CardDescription className="text-sm">
+            {viewingUser.id}
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-1">
           <span className="font-medium text-sm">Known skills</span>
           <div className="flex flex-wrap gap-1">
-            {user.knownSkills.map((skill) => (
+            {viewingUser.knownSkills.map((skill) => (
               <Badge key={skill.skillName}>{skill.skillName}</Badge>
             ))}
-            {user.knownSkills.length === 0 ? (
+            {viewingUser.knownSkills.length === 0 ? (
               <Badge variant="outline">None</Badge>
             ) : (
               <></>
@@ -55,12 +68,12 @@ export default async function UserCard({ userId }: { userId: string }) {
         <div className="flex flex-col gap-1 mt-4">
           <span className="font-medium text-sm">Wanted skills</span>
           <div className="flex flex-wrap gap-1">
-            {user.wantedSkills.map((skill) => (
+            {viewingUser.wantedSkills.map((skill) => (
               <Badge variant="outline" key={skill.skillName}>
                 {skill.skillName}
               </Badge>
             ))}
-            {user.wantedSkills.length === 0 ? (
+            {viewingUser.wantedSkills.length === 0 ? (
               <Badge variant="outline">None</Badge>
             ) : (
               <></>
@@ -69,10 +82,7 @@ export default async function UserCard({ userId }: { userId: string }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="ml-auto gap-2">
-          Add
-          <UserRoundPlus className="h-4 w-4" />
-        </Button>
+        <AddConnectionButton viewingUser={viewingUser} user={user} />
       </CardFooter>
     </Card>
   );
