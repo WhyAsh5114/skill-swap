@@ -14,7 +14,7 @@ import { User } from "lucia";
 
 type PropsType = {
   viewingUser: Prisma.UserGetPayload<{
-    include: { connections: true; receivedRequests: true };
+    include: { connections: true; receivedRequests: true; connectionOf: true };
   }>;
   user: User;
 };
@@ -27,9 +27,9 @@ export default function AddConnectionButton({ viewingUser, user }: PropsType) {
       (request) => request.fromUserId === user.id
     )
   );
-  const isConnection = viewingUser.connections.some(
-    (connection) => connection.id === user.id
-  );
+  const isConnection = viewingUser.connections
+    .concat(viewingUser.connectionOf)
+    .some((connection) => connection.id === user.id);
 
   async function addConnection() {
     setAdding(true);

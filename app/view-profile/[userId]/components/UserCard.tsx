@@ -27,6 +27,7 @@ export default async function UserCard({ viewingUserId }: PropsType) {
       wantedSkills: true,
       connections: true,
       receivedRequests: true,
+      connectionOf: true,
     },
   });
   if (!viewingUser) {
