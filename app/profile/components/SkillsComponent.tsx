@@ -6,13 +6,12 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import type { SkillOfUser } from "@prisma/client";
-import { saveChangesAction } from "./actions";
-import { useToast } from "@/hooks/use-toast";
+import { saveSkillsChangesAction } from "./actions";
+import { toast } from "@/hooks/use-toast";
 
 type PropsType = { skillsOfUser: SkillOfUser[] };
 
 export function SkillsComponent({ skillsOfUser }: PropsType) {
-  const { toast } = useToast();
   const [saving, setSaving] = useState(false);
 
   const [skillToAdd, setSkillToAdd] = useState("");
@@ -33,7 +32,7 @@ export function SkillsComponent({ skillsOfUser }: PropsType) {
 
   async function saveChanges() {
     setSaving(true);
-    await saveChangesAction(skills);
+    await saveSkillsChangesAction(skills);
     setSaving(false);
     toast({ description: "Changes saved successfully" });
   }
