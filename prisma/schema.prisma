@@ -8,13 +8,26 @@ datasource db {
 }
 
 model User {
-  id             String              @id
-  username       String              @unique
-  password_hash  String
-  profilePicture String?
-  sessions       Session[]
-  knownSkills    KnownSkillOfUser[]
-  wantedSkills   WantedSkillOfUser[]
+  id               String              @id
+  username         String              @unique
+  password_hash    String
+  profilePicture   String?
+  sessions         Session[]
+  knownSkills      KnownSkillOfUser[]
+  wantedSkills     WantedSkillOfUser[]
+  connections      User[]              @relation("userConnections")
+  connectionOf     User[]              @relation("userConnections")
+  sentRequests     ConnectionRequest[] @relation("sentRequests")
+  receivedRequests ConnectionRequest[] @relation("receivedRequests")
+}
+
+model ConnectionRequest {
+  fromUser   User   @relation(name: "sentRequests", fields: [fromUserId], references: [id])
+  fromUserId String
+  toUser     User   @relation(name: "receivedRequests", fields: [toUserId], references: [id])
+  toUserId   String
+
+  @@id([fromUserId, toUserId])
 }
 
 model Session {
