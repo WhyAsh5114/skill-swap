@@ -37,7 +37,8 @@ export default function ChatWindow({ toUserId, allMessages }: PropsType) {
         );
         const result = await response.json();
         setMessages([...messages, ...result]);
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (result.length > 0)
+          bottomRef.current?.scrollIntoView({ behavior: "smooth" });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,6 +46,7 @@ export default function ChatWindow({ toUserId, allMessages }: PropsType) {
 
     fetchData();
     const intervalId = setInterval(fetchData, 1000);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 
     return () => clearInterval(intervalId);
   }, []);
