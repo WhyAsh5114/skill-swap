@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
-import { sendMessageAction } from "./actions";
+import { getNewMessages, sendMessageAction } from "./actions";
 import type { Message } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { LoaderCircle, SendHorizontal } from "lucide-react";
@@ -29,19 +29,13 @@ export default function ChatWindow({ toUserId, allMessages }: PropsType) {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `/api/chat/${toUserId}?lastMessageAt=${Number(
-            messages.at(-1)?.createdAt
-          )}`
-        );
-        const result = await response.json();
-        setMessages([...messages, ...result]);
-        if (result.length > 0)
-          bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      const newMessages = await getNewMessages(
+        Number(messages.at(-1)?.createdAt),
+        toUserId
+      );
+      setMessages([...messages, ...newMessages]);
+      if (newMessages.length > 0)
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     fetchData();

@@ -19,3 +19,22 @@ export async function sendMessageAction(message: string, toUserId: string) {
 
   return messageObject;
 }
+
+export async function getNewMessages(
+  lastMessageAt: EpochTimeStamp,
+  withUserId: string
+) {
+  const { user } = await validateRequest();
+  if (!user) return redirect("/login");
+
+  return await prisma.message.findMany({
+    where: {
+      OR: [
+        { fromUserId: user.id, toUserId: withUserId },
+        { fromUserId: withUserId, toUserId: user.id },
+      ],
+      createdAt: { gt: new Date(lastMessageAt) },
+    },
+    orderBy: { createdAt: "asc" },
+  });
+}
