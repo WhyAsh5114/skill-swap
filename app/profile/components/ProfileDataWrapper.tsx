@@ -1,13 +1,13 @@
 import { validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import ProfilePictureComponent from "./ProfilePictureComponent";
+import ProfileComponent from "./ProfileComponent";
 
-export async function ProfilePictureDataWrapper() {
+export default async function ProfileDataWrapper() {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
 
   return (
-    <ProfilePictureComponent
+    <ProfileComponent
       username={user.username}
       profilePicture={user.profilePicture ?? ""}
     />

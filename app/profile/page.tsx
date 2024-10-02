@@ -9,8 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypographyH2 } from "@/components/ui/typographyH2";
 import { Suspense } from "react";
+import ProfileDataWrapper from "./components/ProfileDataWrapper";
 import { SkillsDataWrapper } from "./components/SkillsDataWrapper";
-import { ProfilePictureDataWrapper } from "./components/ProfilePicureDataWrapper";
 
 export default async function Page() {
   return (
@@ -31,7 +31,7 @@ export default async function Page() {
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
               <Suspense fallback={<Skeleton className="h-36 w-full" />}>
-                <ProfilePictureDataWrapper />
+                <ProfileDataWrapper />
               </Suspense>
             </CardContent>
           </Card>

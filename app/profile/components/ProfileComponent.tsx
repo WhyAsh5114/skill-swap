@@ -13,7 +13,7 @@ type PropsType = {
   profilePicture: string;
 };
 
-export default function ProfilePictureComponent(data: PropsType) {
+export default function ProfileComponent(data: PropsType) {
   const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
 
