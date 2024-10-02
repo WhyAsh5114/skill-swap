@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { UserRoundX } from "lucide-react";
 import { useState } from "react";
-import { acceptConnectionAction } from "./actions";
+import { cancelConnectionRequest } from "./actions";
 
 export default function CancelConnectionRequestButton({
   toUserId,
@@ -15,7 +15,7 @@ export default function CancelConnectionRequestButton({
 
   async function cancelConnection() {
     setCancelling(true);
-    await acceptConnectionAction(toUserId);
+    await cancelConnectionRequest(toUserId);
     setCancelling(false);
     setCancelled(true);
   }
@@ -24,7 +24,6 @@ export default function CancelConnectionRequestButton({
     return (
       <Button className="gap-2 w-28" disabled variant="outline">
         <span className="grow text-center">Cancelled</span>
-        <UserRoundX className="h-4 w-4" />
       </Button>
     );
   }
