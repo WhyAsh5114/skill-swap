@@ -19,6 +19,8 @@ model User {
   connectionOf     User[]              @relation("userConnections")
   sentRequests     ConnectionRequest[] @relation("sentRequests")
   receivedRequests ConnectionRequest[] @relation("receivedRequests")
+  sentMessages     Message[]           @relation("sentMessages")
+  receivedMessages Message[]           @relation("receivedMessages")
 }
 
 model ConnectionRequest {
@@ -59,4 +61,15 @@ model WantedSkillOfUser {
   userId    String
 
   @@id([skillName, userId])
+}
+
+model Message {
+  text       String
+  fromUser   User     @relation(name: "sentMessages", fields: [fromUserId], references: [id])
+  toUser     User     @relation(name: "receivedMessages", fields: [toUserId], references: [id])
+  createdAt  DateTime
+  fromUserId String
+  toUserId   String
+
+  @@id([fromUserId, toUserId, createdAt])
 }
