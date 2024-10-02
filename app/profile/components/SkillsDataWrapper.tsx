@@ -10,6 +10,14 @@ export async function SkillsDataWrapper() {
   const knownSkillsOfUser = await prisma.knownSkillOfUser.findMany({
     where: { userId: user.id },
   });
+  const wantedSkillsOfUser = await prisma.wantedSkillOfUser.findMany({
+    where: { userId: user.id },
+  });
 
-  return <SkillsComponent knownSkillsOfUser={knownSkillsOfUser} />;
+  return (
+    <SkillsComponent
+      knownSkillsOfUser={knownSkillsOfUser}
+      wantedSkillsOfUser={wantedSkillsOfUser}
+    />
+  );
 }

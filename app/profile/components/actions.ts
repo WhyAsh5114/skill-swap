@@ -4,27 +4,42 @@ import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
-export async function saveSkillsChangesAction(skillNames: string[]) {
+export async function saveSkillsChangesAction(
+  knownSkillNames: string[],
+  wantedSkillNames: string[]
+) {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
 
   const createSkills = prisma.skill.createMany({
-    data: skillNames.map((skillName) => ({ name: skillName })),
+    data: knownSkillNames
+      .concat(wantedSkillNames)
+      .map((skillName) => ({ name: skillName })),
     skipDuplicates: true,
   });
 
-  const deleteOldSkillsOfUser = prisma.knownSkillOfUser.deleteMany({
+  const deleteOldKnownSkillsOfUser = prisma.knownSkillOfUser.deleteMany({
     where: { userId: user.id },
   });
 
-  const addSkillsToUser = prisma.knownSkillOfUser.createMany({
-    data: skillNames.map((skillName) => ({ userId: user.id, skillName })),
+  const deleteOldWantedSkillsOfUser = prisma.wantedSkillOfUser.deleteMany({
+    where: { userId: user.id },
+  });
+
+  const addKnownSkillsToUser = prisma.knownSkillOfUser.createMany({
+    data: knownSkillNames.map((skillName) => ({ userId: user.id, skillName })),
+  });
+
+  const addWantedSkillsToUser = prisma.wantedSkillOfUser.createMany({
+    data: wantedSkillNames.map((skillName) => ({ userId: user.id, skillName })),
   });
 
   await prisma.$transaction([
     createSkills,
-    deleteOldSkillsOfUser,
-    addSkillsToUser,
+    deleteOldKnownSkillsOfUser,
+    deleteOldWantedSkillsOfUser,
+    addKnownSkillsToUser,
+    addWantedSkillsToUser,
   ]);
 }
 
