@@ -9,18 +9,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypographyH2 } from "@/components/ui/typographyH2";
 import { Suspense } from "react";
-import ProfilePictureComponent from "./components/ProfilePictureComponent";
 import { SkillsDataWrapper } from "./components/SkillsDataWrapper";
-import { UsernameComponent } from "./components/UsernameComponent";
 import { ProfilePictureDataWrapper } from "./components/ProfilePicureDataWrapper";
 
 export default async function Page() {
   return (
     <div className="h-px grow w-full max-w-xl">
       <TypographyH2>Profile</TypographyH2>
-      <Suspense fallback={<Skeleton className="h-6 mt-2 w-32" />}>
-        <UsernameComponent />
-      </Suspense>
       <Tabs defaultValue="profile" className="w-full mt-4">
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="profile">Profile</TabsTrigger>
@@ -48,7 +43,7 @@ export default async function Page() {
               <CardDescription>Manage your skills here</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-              <Suspense fallback={<Skeleton className="h-36 w-full" />}>
+              <Suspense fallback={<Skeleton className="h-72 w-full" />}>
                 <SkillsDataWrapper />
               </Suspense>
             </CardContent>
