@@ -55,3 +55,26 @@ export async function saveProfileChangesAction(
     data: { username, profilePicture },
   });
 }
+
+export async function acceptConnectionAction(fromUserId: string) {
+  const { user } = await validateRequest();
+  if (!user) return redirect("/login");
+
+  const connectionRequest = await prisma.connectionRequest.findUnique({
+    where: { fromUserId_toUserId: { fromUserId, toUserId: user.id } },
+  });
+
+  if (!connectionRequest) {
+    return "No connection request found";
+  }
+
+  const deleteRequest = prisma.connectionRequest.delete({
+    where: { fromUserId_toUserId: { fromUserId, toUserId: user.id } },
+  });
+  const addConnection = prisma.user.update({
+    where: { id: user.id },
+    data: { connections: { connect: { id: fromUserId } } },
+  });
+
+  await prisma.$transaction([deleteRequest, addConnection]);
+}

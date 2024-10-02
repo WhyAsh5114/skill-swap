@@ -11,6 +11,7 @@ import { TypographyH2 } from "@/components/ui/typographyH2";
 import { Suspense } from "react";
 import ProfileDataWrapper from "./components/ProfileDataWrapper";
 import { SkillsDataWrapper } from "./components/SkillsDataWrapper";
+import ConnectionsDataWrapper from "./components/ConnectionsDataWrapper";
 
 export default async function Page() {
   return (
@@ -20,6 +21,7 @@ export default async function Page() {
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="skills">Skills</TabsTrigger>
+          <TabsTrigger value="connections">Connections</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
           <Card className="rounded-lg">
@@ -30,7 +32,7 @@ export default async function Page() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-              <Suspense fallback={<Skeleton className="h-36 w-full" />}>
+              <Suspense fallback={<Skeleton className="h-[284px] w-full" />}>
                 <ProfileDataWrapper />
               </Suspense>
             </CardContent>
@@ -45,6 +47,19 @@ export default async function Page() {
             <CardContent className="flex flex-col gap-2">
               <Suspense fallback={<Skeleton className="h-72 w-full" />}>
                 <SkillsDataWrapper />
+              </Suspense>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="connections">
+          <Card className="rounded-lg">
+            <CardHeader>
+              <CardTitle>Connections</CardTitle>
+              <CardDescription>Manage your connections here</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <Suspense fallback={<Skeleton className="h-72 w-full" />}>
+                <ConnectionsDataWrapper />
               </Suspense>
             </CardContent>
           </Card>
