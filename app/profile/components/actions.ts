@@ -78,3 +78,20 @@ export async function acceptConnectionAction(fromUserId: string) {
 
   await prisma.$transaction([deleteRequest, addConnection]);
 }
+
+export async function cancelConnectionRequest(toUserId: string) {
+  const { user } = await validateRequest();
+  if (!user) return redirect("/login");
+
+  const connectionRequest = await prisma.connectionRequest.findUnique({
+    where: { fromUserId_toUserId: { fromUserId: user.id, toUserId } },
+  });
+
+  if (!connectionRequest) {
+    return "No connection request found";
+  }
+
+  await prisma.connectionRequest.delete({
+    where: { fromUserId_toUserId: { fromUserId: user.id, toUserId } },
+  });
+}
