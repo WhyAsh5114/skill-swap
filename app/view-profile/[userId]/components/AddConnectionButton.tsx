@@ -1,16 +1,12 @@
 "use client";
 
+import ChatButton from "@/app/profile/components/ChatButton";
 import { Button } from "@/components/ui/button";
-import {
-  LoaderCircle,
-  UserRoundCheck,
-  UserRoundCog,
-  UserRoundPlus,
-} from "lucide-react";
-import { sendConnectionRequest } from "./actions";
-import { useState } from "react";
 import type { Prisma } from "@prisma/client";
 import { User } from "lucia";
+import { LoaderCircle, UserRoundCog, UserRoundPlus } from "lucide-react";
+import { useState } from "react";
+import { sendConnectionRequest } from "./actions";
 
 type PropsType = {
   viewingUser: Prisma.UserGetPayload<{
@@ -39,12 +35,7 @@ export default function AddConnectionButton({ viewingUser, user }: PropsType) {
   }
 
   if (isConnection) {
-    return (
-      <Button className="ml-auto gap-2" disabled>
-        Connected
-        <UserRoundCheck className="h-4 w-4" />
-      </Button>
-    );
+    return <ChatButton withUserId={viewingUser.id} />;
   }
 
   if (requestSent) {
