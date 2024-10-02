@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id            String        @id
-  username      String        @unique
-  password_hash String
-  sessions      Session[]
-  SkillOfUser   SkillOfUser[]
+  id             String        @id
+  username       String        @unique
+  password_hash  String
+  profilePicture String?
+  sessions       Session[]
+  skills         SkillOfUser[]
 }
 
 model Session {
@@ -23,8 +24,8 @@ model Session {
 }
 
 model Skill {
-  name        String        @id
-  SkillOfUser SkillOfUser[]
+  name  String        @id
+  users SkillOfUser[]
 }
 
 model SkillOfUser {
