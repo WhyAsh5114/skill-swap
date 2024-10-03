@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -70,6 +71,8 @@ model Message {
   createdAt  DateTime
   fromUserId String
   toUserId   String
+  filename   String?
+  file       Bytes?
 
   @@id([fromUserId, toUserId, createdAt])
 }
