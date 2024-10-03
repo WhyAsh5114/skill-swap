@@ -1,12 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import type { Message } from "@prisma/client";
 import { useEffect, useRef, useState } from "react";
 import { getNewMessages, sendMessageAction } from "./actions";
-import type { Message } from "@prisma/client";
-import { Badge } from "@/components/ui/badge";
-import { LoaderCircle, SendHorizontal } from "lucide-react";
+import SendButton from "./SendButton";
 
 type PropsType = {
   toUserId: string;
@@ -17,33 +16,34 @@ export default function ChatWindow({ toUserId, allMessages }: PropsType) {
   const [messages, setMessages] = useState<Message[]>(allMessages);
   const [message, setMessage] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const [sending, setSending] = useState(false);
+  const messagesRef = useRef(messages);
 
   async function sendMessage() {
-    setSending(true);
-    const sentMessage = await sendMessageAction(message, toUserId);
+    await sendMessageAction(message, toUserId);
     setMessage("");
-    setSending(false);
-    setMessages([...messages, sentMessage]);
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchNewMessages() {
+      const lastMessage = messagesRef.current.at(-1);
       const newMessages = await getNewMessages(
-        Number(messages.at(-1)?.createdAt),
+        Number(lastMessage?.createdAt ?? 0),
         toUserId
       );
-      setMessages([...messages, ...newMessages]);
-      if (newMessages.length > 0)
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
+      if (newMessages.length === 0) return;
 
-    fetchData();
-    const intervalId = setInterval(fetchData, 1000);
+      setMessages((previousMessages) => previousMessages.concat(newMessages));
+    }
+
+    const intervalId = setInterval(fetchNewMessages, 1000);
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-
     return () => clearInterval(intervalId);
-  }, []);
+  }, [toUserId]);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <>
@@ -69,22 +69,13 @@ export default function ChatWindow({ toUserId, allMessages }: PropsType) {
         })}
         <div ref={bottomRef} />
       </div>
-      <form
-        className="flex gap-1"
-        onSubmit={(e) => {
-          e.preventDefault();
-          sendMessage();
-        }}
-      >
+      <form className="flex gap-1" action={sendMessage}>
         <Input
           placeholder="Type here"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <Button type="submit" className="gap-2" disabled={sending}>
-          {sending ? <LoaderCircle className="animate-spin h-6 w-6" /> : "Send"}
-          <SendHorizontal className="h-4 w-4" />
-        </Button>
+        <SendButton />
       </form>
     </>
   );
