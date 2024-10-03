@@ -17,7 +17,8 @@ export default async function ChatDataWrapper({ toUserId }: PropsType) {
       ],
     },
     orderBy: { createdAt: "asc" },
+    omit: { file: true },
   });
 
-  return <ChatWindow toUserId={toUserId} allMessages={messages} />;
+  return <ChatWindow user={user} toUserId={toUserId} allMessages={messages} />;
 }
