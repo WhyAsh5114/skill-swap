@@ -30,13 +30,13 @@ export default function ChatWindow({ toUserId, allMessages, user }: PropsType) {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const messagesRef = useRef(messages);
 
-  function downloadFile(filename: string, createdAt: Number | Date) {
+  function downloadFile(message: Omit<Message, "file">) {
     const downloadUrl = `/api/downloadFile?fromUserId=${
-      user.id
-    }&toUserId=${toUserId}&createdAt=${Number(createdAt)}`;
+      message.fromUserId
+    }&toUserId=${message.toUserId}&createdAt=${Number(message.createdAt)}`;
     const a = document.createElement("a");
     a.href = downloadUrl;
-    a.download = filename;
+    a.download = message.filename!;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -88,12 +88,13 @@ export default function ChatWindow({ toUserId, allMessages, user }: PropsType) {
             {message.filename ? (
               <Button
                 className="flex items-center gap-1 border my-1 p-2 rounded-lg"
-                onClick={() =>
-                  downloadFile(message.filename!, message.createdAt)
+                variant={
+                  message.fromUserId === user.id ? "default" : "secondary"
                 }
+                onClick={() => downloadFile(message)}
               >
                 <File className="h-4 w-4" />
-                {message.filename}
+                <span className="truncate max-w-48">{message.filename}</span>
               </Button>
             ) : (
               <></>
