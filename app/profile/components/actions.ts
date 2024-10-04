@@ -2,6 +2,7 @@
 
 import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function saveSkillsChangesAction(
@@ -54,6 +55,8 @@ export async function saveProfileChangesAction(
     where: { id: user.id },
     data: { username, profilePicture },
   });
+
+  revalidateTag("user");
 }
 
 export async function acceptConnectionAction(fromUserId: string) {

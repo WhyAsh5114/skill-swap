@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -5,12 +6,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { validateRequest } from "@/lib/auth";
+import { getInitials } from "@/lib/utils";
 import { User } from "lucide-react";
 import Link from "next/link";
 import { LogoutButton } from "./LogoutButton";
-import { getInitials } from "@/lib/utils";
 
 export default async function UserDropdown() {
   const { user } = await validateRequest();
