@@ -9,20 +9,23 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle, User } from "lucide-react";
 import { saveProfileChangesAction } from "./actions";
 import { toast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 
 type PropsType = {
   username: string;
   profilePicture: string;
+  about: string;
 };
 
 export default function ProfileComponent(data: PropsType) {
   const [saving, setSaving] = useState(false);
   const [username, setUsername] = useState(data.username);
   const [profilePicture, setProfilePicture] = useState(data.profilePicture);
+  const [about, setAbout] = useState(data.about);
 
   async function saveChanges() {
     setSaving(true);
-    await saveProfileChangesAction(username, profilePicture);
+    await saveProfileChangesAction(username, profilePicture, about);
     setSaving(false);
     toast({ description: "Changes saved successfully" });
   }
@@ -56,6 +59,15 @@ export default function ProfileComponent(data: PropsType) {
           placeholder="Paste a link"
           value={profilePicture}
           onChange={(e) => setProfilePicture(e.target.value)}
+        />
+      </div>
+      <div className="grid w-full items-center gap-1.5 col-span-2">
+        <Label htmlFor="about">About</Label>
+        <Textarea
+          id="about"
+          placeholder="Bio"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
         />
       </div>
       <Button className="col-span-2 ml-auto" onClick={saveChanges}>

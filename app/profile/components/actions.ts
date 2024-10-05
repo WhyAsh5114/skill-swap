@@ -46,14 +46,15 @@ export async function saveSkillsChangesAction(
 
 export async function saveProfileChangesAction(
   username: string,
-  profilePicture: string
+  profilePicture: string,
+  about: string
 ) {
   const { user } = await validateRequest();
   if (!user) return redirect("/login");
 
   await prisma.user.update({
     where: { id: user.id },
-    data: { username, profilePicture },
+    data: { username, profilePicture, about },
   });
 
   revalidateTag("user");

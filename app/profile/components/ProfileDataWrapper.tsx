@@ -10,6 +10,7 @@ export default async function ProfileDataWrapper() {
     <ProfileComponent
       username={user.username}
       profilePicture={user.profilePicture ?? ""}
+      about={user.about ?? ""}
     />
   );
 }
