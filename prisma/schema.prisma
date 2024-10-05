@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["omitApi"]
 }
 
@@ -13,6 +13,7 @@ model User {
   username         String              @unique
   password_hash    String
   profilePicture   String?
+  about            String?
   sessions         Session[]
   knownSkills      KnownSkillOfUser[]
   wantedSkills     WantedSkillOfUser[]
