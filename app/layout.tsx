@@ -9,6 +9,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/toaster";
+import Image from "next/image";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex items-center p-2.5 border-b mb-2 bg-popover gap-2">
+            <Image src="/favicon.ico" alt="logo" width="32" height="32" />
             <Link className="font-bold text-2xl mr-auto" href="/">
               Skill Swap
             </Link>
