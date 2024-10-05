@@ -81,6 +81,10 @@ export default async function UserCard({ viewingUserId }: PropsType) {
             )}
           </div>
         </div>
+        <div className="flex flex-col gap-1 mt-4">
+          <span className="font-medium text-sm">About</span>
+          <span className="text-wrap text-sm">{viewingUser.about}</span>
+        </div>
       </CardContent>
       <CardFooter>
         <AddConnectionButton viewingUser={viewingUser} user={user} />
