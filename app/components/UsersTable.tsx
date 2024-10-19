@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -23,55 +24,59 @@ export async function UsersTable() {
   });
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead colSpan={2}>User</TableHead>
-          <TableHead className="w-28">Known</TableHead>
-          <TableHead className="w-28">Wanted</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.username}>
-            <TableCell>
-              <Link href={`/view-profile/${user.id}`}>
-                <Avatar>
-                  <AvatarImage src={user.profilePicture ?? ""} />
-                  <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
-                </Avatar>
-              </Link>
-            </TableCell>
-            <TableCell>
-              <Link href={`/view-profile/${user.id}`}>{user.username}</Link>
-            </TableCell>
-            <TableCell>
-              <div className="flex flex-wrap gap-1">
-                {user.knownSkills.map((skill) => (
-                  <Badge key={skill.skillName}>{skill.skillName}</Badge>
-                ))}
-                {user.knownSkills.length === 0 ? (
-                  <Badge variant="outline">None</Badge>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex flex-wrap gap-1">
-                {user.wantedSkills.map((skill) => (
-                  <Badge key={skill.skillName}>{skill.skillName}</Badge>
-                ))}
-                {user.wantedSkills.length === 0 ? (
-                  <Badge variant="outline">None</Badge>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </TableCell>
+    <ScrollArea className="h-px grow">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead colSpan={2}>User</TableHead>
+            <TableHead className="w-28">Known</TableHead>
+            <TableHead className="w-28">Wanted</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.username}>
+              <TableCell>
+                <Link href={`/view-profile/${user.id}`}>
+                  <Avatar>
+                    <AvatarImage src={user.profilePicture ?? ""} />
+                    <AvatarFallback>
+                      {getInitials(user.username)}
+                    </AvatarFallback>
+                  </Avatar>
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Link href={`/view-profile/${user.id}`}>{user.username}</Link>
+              </TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {user.knownSkills.map((skill) => (
+                    <Badge key={skill.skillName}>{skill.skillName}</Badge>
+                  ))}
+                  {user.knownSkills.length === 0 ? (
+                    <Badge variant="outline">None</Badge>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {user.wantedSkills.map((skill) => (
+                    <Badge key={skill.skillName}>{skill.skillName}</Badge>
+                  ))}
+                  {user.wantedSkills.length === 0 ? (
+                    <Badge variant="outline">None</Badge>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </ScrollArea>
   );
 }
