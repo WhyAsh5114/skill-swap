@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# Skill Swap
 
-## Getting Started
+Skill Swap is a social media platform designed to enable users to share and exchange skills seamlessly. With real-time chat, file-sharing capabilities, and a connection-based linking system, users can create meaningful interactions and collaborations.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Core Features
+- **Skill Sharing:** Showcase your expertise and discover others' skills.
+- **Real-Time Chat:** Instant messaging with users.
+- **File Sharing:** Easily share resources and files during conversations.
+- **Connections System:** Establish connections with like-minded users to build your network.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Built With
+- **Next.js:** Modern React framework for server-side rendering and static site generation.
+- **Prisma:** ORM for interacting with the database.
+- **PostgreSQL:** Reliable and scalable relational database.
+- **Neon:** Serverless PostgreSQL hosting platform.
+- **Shadcn/ui:** Component library for consistent and beautiful UI.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+### Prerequisites
+Ensure you have the following installed:
+- Node.js (v16 or later)
+- npm or yarn
+- PostgreSQL (local or hosted, compatible with Neon)
 
-## Learn More
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/skill-swap.git
+   cd skill-swap
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Configure environment variables:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   DATABASE_URL=postgresql://username:password@host:port/database
+   NEXTAUTH_SECRET=your-secret
+   NEXTAUTH_URL=http://localhost:3000
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Set up the database:
+   ```bash
+   npx prisma migrate dev --name init
+   npx prisma generate
+   ```
 
-## Deploy on Vercel
+5. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Access the application at `http://localhost:3000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Usage
+- Sign up or log in to the platform.
+- Update your profile with your skills and interests.
+- Browse or search for users based on skills.
+- Initiate a chat to exchange knowledge or resources.
+- Establish a connection for future collaboration.
+
+## Deployment
+
+### Deploying to Vercel
+1. Connect the repository to your Vercel account.
+2. Add the environment variables from your `.env` file to the Vercel dashboard.
+3. Deploy your application with one click.
+
+### Database Hosting
+For serverless database hosting, use [Neon](https://neon.tech) and connect it via the `DATABASE_URL` in the `.env` file.
+
+## Contributing
+We welcome contributions to enhance Skill Swap. To get started:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. Push the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a pull request.
+
+## License
+Skill Swap is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+- The open-source community for providing tools and libraries.
+- Contributors who helped build and maintain the project.
+
+---
+
+Enjoy sharing and learning new skills with Skill Swap!
+
