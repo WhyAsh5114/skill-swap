@@ -1,0 +1,72 @@
+{
+  "name": "Skill Swap Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [3000, 5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js App",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "Prisma.prisma",
+        "ms-azuretools.vscode-docker",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "usernamehw.errorlens",
+        "christian-kohler.path-intellisense",
+        "formulahendry.auto-rename-tag",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        "tailwindCSS.experimental.classRegex": [
+          ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+          ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+        ],
+        "[prisma]": {
+          "editor.defaultFormatter": "Prisma.prisma"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "postStartCommand": "bash .devcontainer/scripts/post-start.sh",
+  "remoteUser": "node",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "node",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  }
+}
